@@ -1,0 +1,53 @@
+{
+  "_from": "react-native-parallax-header",
+  "_id": "react-native-parallax-header@1.1.3",
+  "_inBundle": false,
+  "_integrity": "sha512-gEnyNPyCv46aCn4PEky9h1SinxznxvcAsVmdFSUEqlZfBHCNtuvppWjkDkPRcKVCh3HmYwxX1N2VeWHAjppasw==",
+  "_location": "/react-native-parallax-header",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-parallax-header",
+    "name": "react-native-parallax-header",
+    "escapedName": "react-native-parallax-header",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-parallax-header/-/react-native-parallax-header-1.1.3.tgz",
+  "_shasum": "d02b6465ad02892832966f37af8e9148ed0f727d",
+  "_spec": "react-native-parallax-header",
+  "_where": "H:\\developmentProject\\reactNativeNovel",
+  "author": {
+    "name": "Chiew Carol"
+  },
+  "bugs": {
+    "url": "https://github.com/kyaroru/RNParallax/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A react native scroll view component with Parallax header :p",
+  "homepage": "https://github.com/kyaroru/RNParallax#readme",
+  "keywords": [
+    "parallax",
+    "react-native-parallax",
+    "header",
+    "scrollview"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "react-native-parallax-header",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyaroru/RNParallax.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.3"
+}
