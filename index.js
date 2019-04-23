@@ -309,7 +309,7 @@ class RNParallax extends Component {
 				)}
 				{...scrollViewProps}
 			>
-				<View style={[{ marginTop: this.getHeaderMaxHeight() }, innerContainerStyle]}>
+				<View style={[innerContainerStyle]}>
 					{renderContent()}
 				</View>
 			</Animated.ScrollView>
