@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Platform, Animated, Text, View, Dimensions, StatusBar, } from 'react-native';
 import { screenW, screenH, setSpText, scaleSize, } from "./ScreenUtil";
+import LinearGradient from 'react-native-linear-gradient';
 const { height: SCREEN_HEIGHT, } = Dimensions.get('window');
 const IS_IPHONE_X = SCREEN_HEIGHT === scaleSize(812) || SCREEN_HEIGHT === scaleSize(896);
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? (IS_IPHONE_X ? scaleSize(44) : scaleSize(20)) : scaleSize(0);
@@ -64,6 +65,13 @@ const styles = StyleSheet.create({
 		color: DEFAULT_TITLE_COLOR,
 		textAlign: 'center',
 		fontSize: setSpText(16),
+	},
+	absoluteAll: {
+		width: screenW,
+		height: scaleSize(280),
+		position: 'absolute',
+		top: 0,
+		left: 0,
 	},
 });
 
@@ -325,6 +333,7 @@ class RNParallax extends Component {
 				/>
 				{this.renderNavbarBackground()}
 				{this.renderHeaderBackground()}
+				<LinearGradient style={[styles.absoluteAll]} colors={['rgba(255,255,255,.9)', 'rgba(255,255,255,.9)', '#fff']}></LinearGradient>
 				{this.renderHeaderTitle()}
 				{this.renderScrollView()}
 				{this.renderHeaderForeground()}
