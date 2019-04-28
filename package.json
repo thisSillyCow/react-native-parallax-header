@@ -1,27 +1,30 @@
 {
-  "_from": "react-native-parallax-header",
-  "_id": "react-native-parallax-header@1.1.3",
+  "_args": [
+    [
+      "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
+      "H:\\developmentProject\\reactNativeNovel"
+    ]
+  ],
+  "_from": "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
+  "_id": "react-native-parallax-header@git+https://github.com/thisSillyCow/react-native-parallax-header.git#2a4f856337e755a131a54e349b134d65277cbc86",
   "_inBundle": false,
-  "_integrity": "sha512-gEnyNPyCv46aCn4PEky9h1SinxznxvcAsVmdFSUEqlZfBHCNtuvppWjkDkPRcKVCh3HmYwxX1N2VeWHAjppasw==",
+  "_integrity": "",
   "_location": "/react-native-parallax-header",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "react-native-parallax-header",
-    "name": "react-native-parallax-header",
-    "escapedName": "react-native-parallax-header",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+    "type": "git",
+    "raw": "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
+    "rawSpec": "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
+    "saveSpec": "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
+    "fetchSpec": "https://github.com/thisSillyCow/react-native-parallax-header.git",
+    "gitCommittish": null
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/react-native-parallax-header/-/react-native-parallax-header-1.1.3.tgz",
+  "_resolved": "git+https://github.com/thisSillyCow/react-native-parallax-header.git#2a4f856337e755a131a54e349b134d65277cbc86",
   "_shasum": "d02b6465ad02892832966f37af8e9148ed0f727d",
-  "_spec": "react-native-parallax-header",
+  "_spec": "git+https://github.com/thisSillyCow/react-native-parallax-header.git",
   "_where": "H:\\developmentProject\\reactNativeNovel",
   "author": {
     "name": "Chiew Carol"

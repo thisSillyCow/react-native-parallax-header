@@ -331,9 +331,9 @@ class RNParallax extends Component {
 				<StatusBar
 					backgroundColor={statusBarColor || navbarColor}
 				/>
-				{this.renderNavbarBackground()}
-				{this.renderHeaderBackground()}
-				<LinearGradient style={[styles.absoluteAll]} colors={['rgba(255,255,255,.9)', 'rgba(255,255,255,.9)', '#fff']}></LinearGradient>
+				{/* {this.renderNavbarBackground()}
+				{this.renderHeaderBackground()} */}
+				{/* <LinearGradient style={[styles.absoluteAll]} colors={['rgba(255,255,255,.9)', 'rgba(255,255,255,.9)', '#fff']}></LinearGradient> */}
 				{this.renderHeaderTitle()}
 				{this.renderScrollView()}
 				{this.renderHeaderForeground()}
