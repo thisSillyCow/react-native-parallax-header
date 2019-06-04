@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Platform, Animated, Text, View, Dimensions, StatusBar, } from 'react-native';
 import { screenW, screenH, setSpText, scaleSize, } from "./ScreenUtil";
-import LinearGradient from 'react-native-linear-gradient';
 const { height: SCREEN_HEIGHT, } = Dimensions.get('window');
 const IS_IPHONE_X = SCREEN_HEIGHT === scaleSize(812) || SCREEN_HEIGHT === scaleSize(896);
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? (IS_IPHONE_X ? scaleSize(44) : scaleSize(20)) : scaleSize(0);
@@ -224,19 +223,11 @@ class RNParallax extends Component {
 	}
 
 	renderNavbarBackground() {
-		const { navbarColor } = this.props;
-		const navBarOpacity = this.getNavBarOpacity();
+		const { renderContainer } = this.props;
 		return (
-			<Animated.View
-				style={[
-					styles.header,
-					{
-						height: this.getHeaderHeight(),
-						backgroundColor: navbarColor,
-						opacity: navBarOpacity,
-					},
-				]}
-			/>
+			<Animated.View>
+				{renderContainer && renderContainer()}
+			</Animated.View>
 		);
 	}
 
@@ -270,9 +261,7 @@ class RNParallax extends Component {
 				style={[
 					styles.headerTitle,
 					{
-						transform: [
-							{ translateY: titleTranslateY },
-						],
+						transform: [{ translateY: titleTranslateY },],
 						height: this.getHeaderHeight(),
 						opacity: titleOpacity,
 					},
@@ -286,7 +275,6 @@ class RNParallax extends Component {
 	renderHeaderForeground() {
 		const { renderNavBar } = this.props;
 		const navBarOpacity = this.getNavBarForegroundOpacity();
-
 		return (
 			<Animated.View
 				style={[
@@ -301,7 +289,6 @@ class RNParallax extends Component {
 			</Animated.View>
 		);
 	}
-
 	renderScrollView() {
 		const {
 			renderContent, scrollEventThrottle, scrollViewStyle, contentContainerStyle, innerContainerStyle, scrollViewProps,
@@ -312,6 +299,7 @@ class RNParallax extends Component {
 				style={[styles.scrollView, scrollViewStyle]}
 				contentContainerStyle={contentContainerStyle}
 				scrollEventThrottle={scrollEventThrottle}
+				removeClippedSubviews={true}
 				onScroll={Animated.event(
 					[{ nativeEvent: { contentOffset: { y: scrollY } } }],
 				)}
@@ -331,13 +319,11 @@ class RNParallax extends Component {
 				<StatusBar
 					backgroundColor={statusBarColor || navbarColor}
 				/>
-				{/* {this.renderNavbarBackground()}
-				{this.renderHeaderBackground()} */}
-				{/* <LinearGradient style={[styles.absoluteAll]} colors={['rgba(255,255,255,.9)', 'rgba(255,255,255,.9)', '#fff']}></LinearGradient> */}
+				{/*	{this.renderHeaderBackground()} */}
+				{this.renderNavbarBackground()}
 				{this.renderHeaderTitle()}
 				{this.renderScrollView()}
 				{this.renderHeaderForeground()}
-
 			</View>
 		);
 	}
