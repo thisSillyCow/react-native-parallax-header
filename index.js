@@ -18,6 +18,13 @@ const DEFAULT_BACKGROUND_COLOR = 'rgba(255,255,255,.9)';
 const DEFAULT_TITLE_COLOR = 'white';
 
 const styles = StyleSheet.create({
+	containerTitle: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		height: scaleSize(70),
+	},
 	container: {
 		backgroundColor: 'white',
 		flex: 1,
@@ -223,11 +230,11 @@ class RNParallax extends Component {
 	}
 
 	renderNavbarBackground() {
-		const { renderContainer } = this.props;
+		const { renderContainer, renderContainerStyle } = this.props;
 		return (
-			<Animated.View>
+			<View style={[styles.containerTitle, renderContainerStyle]}>
 				{renderContainer && renderContainer()}
-			</Animated.View>
+			</View>
 		);
 	}
 
@@ -320,9 +327,9 @@ class RNParallax extends Component {
 					backgroundColor={statusBarColor || navbarColor}
 				/>
 				{/*	{this.renderHeaderBackground()} */}
-				{this.renderNavbarBackground()}
 				{this.renderHeaderTitle()}
 				{this.renderScrollView()}
+				{this.renderNavbarBackground()}
 				{this.renderHeaderForeground()}
 			</View>
 		);
