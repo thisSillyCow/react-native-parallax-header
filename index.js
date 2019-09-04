@@ -190,6 +190,15 @@ class RNParallax extends Component {
 			extrapolate: 'clamp',
 		});
 	}
+	getTitleOpacityHide() {
+		const { scrollY } = this.state;
+		const { alwaysShowTitle } = this.props;
+		return scrollY.interpolate({
+			inputRange: this.getInputRange(),
+			outputRange: [1, 1, alwaysShowTitle ? 0 : 1],
+			extrapolate: 'clamp',
+		});
+	}
 
 	renderBackgroundImage() {
 		const { backgroundImage } = this.props;
@@ -231,10 +240,21 @@ class RNParallax extends Component {
 
 	renderNavbarBackground() {
 		const { renderContainer, renderContainerStyle } = this.props;
+		const titleTranslateY = this.getTitleTranslateY();
+		const titleOpacity = this.getTitleOpacityHide();
 		return (
-			<View style={[styles.containerTitle, renderContainerStyle]}>
-				{renderContainer && renderContainer()}
-			</View>
+			<Animated.View
+				style={[
+					styles.headerTitle,
+					{
+						transform: [{ translateY: titleTranslateY },],
+						height: this.getHeaderHeight(),
+						opacity: titleOpacity,
+					},
+				]}
+			>
+				{renderContainer()}
+			</Animated.View>
 		);
 	}
 
@@ -307,9 +327,9 @@ class RNParallax extends Component {
 				contentContainerStyle={contentContainerStyle}
 				scrollEventThrottle={scrollEventThrottle}
 				removeClippedSubviews={true}
-				onScroll={Animated.event(
-					[{ nativeEvent: { contentOffset: { y: scrollY } } }],
-				)}
+				onScroll={
+					Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])
+				}
 				{...scrollViewProps}
 			>
 				<View style={[innerContainerStyle]}>
@@ -323,10 +343,7 @@ class RNParallax extends Component {
 		const { navbarColor, statusBarColor, containerStyle } = this.props;
 		return (
 			<View style={[styles.container, containerStyle]}>
-				<StatusBar
-					backgroundColor={statusBarColor || navbarColor}
-				/>
-				{/*	{this.renderHeaderBackground()} */}
+				<StatusBar backgroundColor={statusBarColor || navbarColor} />
 				{this.renderHeaderTitle()}
 				{this.renderScrollView()}
 				{this.renderNavbarBackground()}
