@@ -250,6 +250,7 @@ class RNParallax extends Component {
 						transform: [{ translateY: titleTranslateY },],
 						height: this.getHeaderHeight(),
 						opacity: titleOpacity,
+						height: scaleSize(70),
 					},
 				]}
 			>
