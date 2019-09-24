@@ -4,14 +4,12 @@
  * width:750px
  * height:1334px
  */
-import { PixelRatio, Dimensions, Platform } from 'react-native'
-
+import { PixelRatio, Dimensions, Platform, StatusBar } from 'react-native'
 export let screenW = Dimensions.get('window').width
 export let screenH = Dimensions.get('window').height
-const fontScale = PixelRatio.getFontScale()
 export let pixelRatio = PixelRatio.get()
 //像素密度
-export const DEFAULT_DENSITY = 2
+export const DEFAULT_DENSITY = 1
 //px转换成dp
 //以iphone6为基准,如果以其他尺寸为基准的话,请修改下面的750和1334为对应尺寸即可.
 const w2 = 750 / DEFAULT_DENSITY
@@ -22,6 +20,8 @@ export const X_WIDTH = 375
 export const X_HEIGHT = 812
 //iPhoneX底部高度
 export const IPHONEX_BOTTOM_HEIGHT = 54;
+
+export const STATUS_HEIGHT = Platform.OS === 'ios' ? 20 : (Platform.Version > 19 ? StatusBar.currentHeight : 0);
 
 // 边缘圆角
 export const radiusNum = scaleSize(5);
@@ -38,7 +38,6 @@ export function setSpText(size) {
     size = Math.round(size * 2 * scale + 0.5)
     return size / DEFAULT_DENSITY
 }
-
 export const getUrlParam = (name) => {
     const that = this
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -121,34 +120,10 @@ export function TimesAgo(timestamp) {
     }
 }
 
-
 //获取时间差 current:1497235409744 当前时间  start:1497235419744 开始时间
 export function getRemainingime(current, start) {
     let time = start - current
-    if (time < 0) {
-        return ['0', '0', '0', '0', '0', '0']
-    }
-    let year = Math.floor(time / (365 * 30 * 24 * 3600 * 1000)) //年
-
-    let month = Math.floor(time / (30 * 24 * 3600 * 1000)) //月
-
-    let days = Math.floor(time / (24 * 3600 * 1000)) //日
-    let temp1 = time % (24 * 3600 * 1000)
-    let temp2 = temp1 % (3600 * 1000)
-    let minutes = Math.floor(temp2 / (60 * 1000)) //分
-    let hours = Math.floor(temp1 / (3600 * 1000)) //时
-    let temp3 = temp2 % (60 * 1000)
-    let seconds = Math.round(temp3 / 1000) //秒
-
-    let strs = [
-        year,
-        toNormal(month),
-        toNormal(days),
-        toNormal(hours),
-        toNormal(minutes),
-        toNormal(seconds)
-    ]
-    return strs //["0", "0", "2", "7", "33", "30"]0年0月2日 7时33分30秒
+    return time / 1000 //["0", "0", "2", "7", "33", "30"]0年0月2日 7时33分30秒
 }
 
 //1497235419
@@ -157,11 +132,8 @@ export function getRemainingimeDistance(distance) {
     if (time < 0) {
         return ['0', '0', '0', '0', '0', '0']
     }
-
     let year = Math.floor(time / (365 * 30 * 24 * 3600 * 1000)) //年
-
     let month = Math.floor(time / (30 * 24 * 3600 * 1000)) //月
-
     let days = Math.floor(time / (24 * 3600 * 1000)) //日
     let temp1 = time % (24 * 3600 * 1000)
     let hours = Math.floor(temp1 / (3600 * 1000)) //时
@@ -255,11 +227,22 @@ export function getRemainingimeDistance2(distance) {
  * @returns {boolean}
  */
 export function isIphoneX() {
+    const dimen = Dimensions.get('window');
     return (
         Platform.OS === 'ios' &&
-        ((screenH === X_HEIGHT && screenW === X_WIDTH) ||
-            (screenH === X_WIDTH && screenW === X_HEIGHT))
+        ((dimen.height === 812 || dimen.width === 812) || (dimen.height === 896 || dimen.width === 896))
     )
+}
+
+
+export function isIphoneNum(mun) {
+    const dimen = Dimensions.get('window');
+    var topMum = mun;
+    if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS
+        && ((dimen.height === 812 || dimen.width === 812) || (dimen.height === 896 || dimen.width === 896))) {
+        topMum = mun + 20;
+    }
+    return scaleSize(topMum)
 }
 
 /**
@@ -280,12 +263,65 @@ export function ifIphoneX(iphoneXStyle, iosStyle = {}, androidStyle) {
     }
 }
 
+
+export function guid() {
+    function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+    return (S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4());
+}
+export function Accuracy(num, len) {
+    const wordCount = num + ''
+    var countNum = num;
+    if (wordCount.length > 4 && wordCount.length < 9) {
+        countNum = parseInt(wordCount.substring(0, wordCount.length - 4) + '.' + wordCount.substring(wordCount.length - 4, wordCount.length)).toFixed(len || 0)
+    } else if (wordCount.length > 8) {
+        countNum = parseInt(wordCount.substring(0, wordCount.length - 8) + '.' + wordCount.substring(wordCount.length - 8, wordCount.length - 7)).toFixed(len || 0)
+    }
+    return countNum;
+}
+export function AccuracyNUm(num) {
+    const wordCount = num + ''
+    var countNum = '';
+    if (wordCount.length > 4 && wordCount.length < 9) {
+        countNum = '万'
+    } else if (wordCount.length > 8) {
+        countNum = '亿'
+    }
+    return countNum;
+
+}
+
+export function insertionSort(array) {
+    for (var i = 1; i < array.length; i++) {
+        var key = array[i];
+        var j = i - 1;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
+    }
+    return array;
+}
+export function insertionSortJSON(array) {
+    for (var i = 1; i < array.length; i++) {
+        var key = array[i];
+        var j = i - 1;
+        while (j >= 0 && array[j].seqNum > key.seqNum) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
+    }
+    return array;
+}
+
 export default class ScreenUtil {
     static screenW = screenW
     static screenH = screenH
     static pixelRatio = pixelRatio
     static DEFAULT_DENSITY = DEFAULT_DENSITY
-
     static setSpText(size) {
         return setSpText(size)
     }
@@ -309,53 +345,25 @@ export default class ScreenUtil {
     static getTaskTime(strDate) {
         return getTaskTime(strDate)
     }
+    static guid() {
+        return guid()
+    }
 
+    static Accuracy(num) {
+        return Accuracy(num)
+    }
+    static AccuracyNUm(num) {
+        return AccuracyNUm(num)
+    }
     static getRemainingimeDistance2(distance) {
         return getRemainingimeDistance2(distance)
     }
-}
-
-export function formatDate(value, type, callback) {
-    var type = type || '';
-    var secondTime = parseInt(value); // 秒
-    var minuteTime = 0; // 分
-    var hourTime = 0; // 小时
-    if (secondTime >= 60) {
-        //如果秒数大于60，将秒数转换成整数
-        //获取分钟，除以60取整数，得到整数分钟
-        minuteTime = parseInt(secondTime / 60);
-        //获取秒数，秒数取佘，得到整数秒数
-        secondTime = parseInt(secondTime % 60);
-        //如果分钟大于60，将分钟转换成小时
-        if (minuteTime >= 60) {
-            //获取小时，获取分钟除以60，得到整数小时
-            hourTime = parseInt(minuteTime / 60);
-            //获取小时后取佘的分，获取分钟除以60取佘的分
-            minuteTime = parseInt(minuteTime % 60);
-        }
+    static insertionSort(array) {
+        return insertionSort(array)
     }
-    var result = '00:' + checkTime(parseInt(secondTime)); //+ "秒";
-
-    if (minuteTime > 0) {
-        result = '' + checkTime(parseInt(minuteTime)) + ':' + checkTime(parseInt(secondTime));
+    static insertionSortJSON(array) {
+        return insertionSortJSON(array)
     }
-    if (hourTime > 0) {
-        result = '' + checkTime(parseInt(hourTime)) + ':' + checkTime(parseInt(minuteTime)) + ':' + checkTime(parseInt(secondTime));
-    }
-    var data = {
-        result: result,
-        type: type
-    }
-    callback && callback(data);
-    return result;
 }
 
 
-/** 时间格式化 */
-function checkTime(i) {
-    //将0-9的数字前面加上0，例1变为01
-    if (i < 10) {
-        i = '0' + i;
-    }
-    return i;
-}

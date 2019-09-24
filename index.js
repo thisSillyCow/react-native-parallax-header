@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Platform, Animated, Text, View, Dimensions, StatusBar, } from 'react-native';
-import { screenW, screenH, setSpText, scaleSize, } from "./ScreenUtil";
+import { screenW, screenH, setSpText, scaleSize, isIphoneNum } from "./ScreenUtil";
 const { height: SCREEN_HEIGHT, } = Dimensions.get('window');
 const IS_IPHONE_X = SCREEN_HEIGHT === scaleSize(812) || SCREEN_HEIGHT === scaleSize(896);
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? (IS_IPHONE_X ? scaleSize(44) : scaleSize(20)) : scaleSize(0);
@@ -248,9 +248,8 @@ class RNParallax extends Component {
 					styles.headerTitle,
 					{
 						transform: [{ translateY: titleTranslateY },],
-						height: this.getHeaderHeight(),
+						height: isIphoneNum(74),
 						opacity: titleOpacity,
-						height: scaleSize(70),
 					},
 				]}
 			>
@@ -292,6 +291,7 @@ class RNParallax extends Component {
 						transform: [{ translateY: titleTranslateY },],
 						height: this.getHeaderHeight(),
 						opacity: titleOpacity,
+
 					},
 				]}
 			>
@@ -346,9 +346,9 @@ class RNParallax extends Component {
 			<View style={[styles.container, containerStyle]}>
 				<StatusBar backgroundColor={statusBarColor || navbarColor} />
 				{this.renderHeaderTitle()}
+				{this.renderScrollView()}
 				{this.renderNavbarBackground()}
 				{this.renderHeaderForeground()}
-				{this.renderScrollView()}
 			</View>
 		);
 	}
